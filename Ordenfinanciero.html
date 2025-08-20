@@ -3,8 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <title>Proyecto: Finanzas Personales</title>
-
-  <!-- =========================
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js" integrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+  
+    <!-- =========================
        Estilos básicos (CSS)
        Paleta: #2E4053 (azul oscuro), #8BC34A (verde), #FFFFFF (blanco), #F7F7F7 (fondo), #87CEEB (celeste)
        ========================= -->
@@ -165,11 +169,51 @@
 </head>
 
 <body>
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    
+    <!-- Logo + nombre -->
+    <a class="navbar-brand d-flex align-items-center fs-3" href="#">
+      <img src="imagenesmenu/Logo personal finance.jpg" alt="Logo" 
+           class="d-inline-block align-text-top me-2" 
+           width="80" height="80">
+      Personal Finance
+    </a>
+
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+ <span class="navbar-toggler-icon"></span>
+</button>
+
+
+    <!-- Links del menú -->
+<div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ms-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="index.html">Menu principal</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="TT2PF.html">Control de gastos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="reduccionDeGastos.html">Reducción de gastos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="Ahorro e inversion.html">Ahorros e inversión</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="Ordenfinanciero.html">Orden financiero</a>
+      </li>
+    </ul>
+
+  </div>
+</nav>
+
   <!-- Encabezado principal de la página: Contiene el título del proyecto y un subtítulo.-->
   <header>
     <h1>Proyecto: Finanzas Personales</h1>
     <p>Enfoque: Orden Financiero</p>
   </header>
+  
 
   <!-- Menú para moverse por secciones (Navegacion) -->
   <nav>
@@ -303,6 +347,7 @@
               </tr>
             </tbody>
           </table>
+          <canvas id="graficoTorta" width="400" height="400" style="margin-top:20px;"></canvas>
         </div>
         <!-- Fin calculadora-->
       </div>
@@ -457,91 +502,116 @@
 
   <!-- Lógica de la CALCULADORA -->
   <script>
-    // Referencias a los elementos  inputs
-    const ingresos      = document.getElementById('ingresos');
-    const pNecesidades  = document.getElementById('pNecesidades');
-    const pDeseos       = document.getElementById('pDeseos');
-    const pAhorro       = document.getElementById('pAhorro');
+  const ingresos      = document.getElementById('ingresos');
+  const pNecesidades  = document.getElementById('pNecesidades');
+  const pDeseos       = document.getElementById('pDeseos');
+  const pAhorro       = document.getElementById('pAhorro');
 
-    const sNecesidades  = document.getElementById('sNecesidades');
-    const sDeseos       = document.getElementById('sDeseos');
-    const sAhorro       = document.getElementById('sAhorro');
-    const sTotal        = document.getElementById('sTotal');
+  const sNecesidades  = document.getElementById('sNecesidades');
+  const sDeseos       = document.getElementById('sDeseos');
+  const sAhorro       = document.getElementById('sAhorro');
+  const sTotal        = document.getElementById('sTotal');
 
-    // Referencias a las celdas donde se mostrarán los valores que obtiene la calculadora
-    const mNecesidades  = document.getElementById('mNecesidades');
-    const mDeseos       = document.getElementById('mDeseos');
-    const mAhorro       = document.getElementById('mAhorro');
-    const mTotal        = document.getElementById('mTotal');
+  const btnCalcular   = document.getElementById('btnCalcular');
+  const btnReset      = document.getElementById('btnReset');
+  const msgError      = document.getElementById('msgError');
 
-    const btnCalcular   = document.getElementById('btnCalcular');
-    const btnReset      = document.getElementById('btnReset');
-    const msgError      = document.getElementById('msgError');
+  function formatoCOP(valor){
+    return valor.toLocaleString('es-CO');
+  }
 
-
-    function formatoCOP(valor){
-      return valor.toLocaleString('es-CO');
-    }
-
-    // Función que realiza el cálculo principal de la regla con la que se hace el calculo
-    function calcular(){
-      // 1) Convertimos los campos de entrada a números. Si están vacíos, se toma 0.
-      const ingreso  = Number(ingresos.value || 0);
-      const n        = Number(pNecesidades.value || 0);
-      const d        = Number(pDeseos.value || 0);
-      const a        = Number(pAhorro.value || 0);
-
-      // Validar que la suma de los porcentajes sea exactamente 100.
-      const suma = n + d + a;
-      sTotal.textContent = suma + ' %'; // Muestra la suma actual de porcentajes
-      const sumaValida = (suma === 100);
-
-      // Mostrar/ocultar mensaje de error si la suma no es 100
-      msgError.style.display = sumaValida ? 'none' : 'block';
-      if(ingreso <= 0 || !sumaValida){
-        mNecesidades.textContent = '$ 0';
-        mDeseos.textContent      = '$ 0';
-        mAhorro.textContent      = '$ 0';
-        mTotal.textContent       = '$ 0';
-        sNecesidades.textContent = n + ' %';
-        sDeseos.textContent      = d + ' %';
-        sAhorro.textContent      = a + ' %';
-        return;
+  // Inicializar gráfico (solo una vez)
+  const ctx = document.getElementById('graficoTorta').getContext('2d');
+  const grafico = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['Necesidades', 'Deseos', 'Ahorro / Deudas'],
+      datasets: [{
+        label: 'Distribución del presupuesto',
+        data: [0, 0, 0],
+        backgroundColor: ['#8BC34A', '#87CEEB', '#2E4053'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom'
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return context.label + ': $ ' + formatoCOP(context.raw);
+            }
+          }
+        }
       }
+    }
+  });
 
-      // Calcula los montos asignados para cada categoría según los porcentajes en numeros enteros.
-      const mN = Math.round(ingreso * (n/100));
-      const mD = Math.round(ingreso * (d/100));
-      const mA = Math.round(ingreso * (a/100));
-      const mT = mN + mD + mA; // El total calculado
+  // Función para actualizar los datos del gráfico
+  function actualizarGrafico(mN, mD, mA) {
+    grafico.data.datasets[0].data = [mN, mD, mA];
+    grafico.update();
+  }
 
-      // Imprimir los resultados
+  // Función principal
+  function calcular(){
+    const ingreso  = Number(ingresos.value || 0);
+    const n        = Number(pNecesidades.value || 0);
+    const d        = Number(pDeseos.value || 0);
+    const a        = Number(pAhorro.value || 0);
+    const suma     = n + d + a;
+
+    sTotal.textContent = suma + ' %';
+    const sumaValida = (suma === 100);
+    msgError.style.display = sumaValida ? 'none' : 'block';
+
+    if (ingreso <= 0 || !sumaValida) {
       sNecesidades.textContent = n + ' %';
       sDeseos.textContent      = d + ' %';
       sAhorro.textContent      = a + ' %';
-
-      mNecesidades.textContent = '$ ' + formatoCOP(mN);
-      mDeseos.textContent      = '$ ' + formatoCOP(mD);
-      mAhorro.textContent      = '$ ' + formatoCOP(mA);
-      mTotal.textContent       = '$ ' + formatoCOP(mT);
+      actualizarGrafico(0, 0, 0);
+      return;
     }
 
-    // Botón para ejecutar el cálculo al hacer clic
-    btnCalcular.addEventListener('click', calcular);
+    const mN = Math.round(ingreso * (n / 100));
+    const mD = Math.round(ingreso * (d / 100));
+    const mA = Math.round(ingreso * (a / 100));
 
-    [ingresos, pNecesidades, pDeseos, pAhorro].forEach(el=>{
-      el.addEventListener('input', calcular);
-    });
+    sNecesidades.textContent = n + ' % — $ ' + formatoCOP(mN);
+    sDeseos.textContent      = d + ' % — $ ' + formatoCOP(mD);
+    sAhorro.textContent      = a + ' % — $ ' + formatoCOP(mA);
+    sTotal.textContent       = suma + ' % — $ ' + formatoCOP(mN + mD + mA);
 
-    btnReset.addEventListener('click', ()=>{
-      pNecesidades.value = 50;
-      pDeseos.value      = 30;
-      pAhorro.value      = 20;
-      calcular();
-    });
+    actualizarGrafico(mN, mD, mA);
+  }
 
-    // Ejecuta el cálculo inicial cuando la página carga, usando los valores por defecto.
+  btnCalcular.addEventListener('click', calcular);
+  [ingresos, pNecesidades, pDeseos, pAhorro].forEach(el => el.addEventListener('input', calcular));
+
+  btnReset.addEventListener('click', () => {
+    pNecesidades.value = 50;
+    pDeseos.value      = 30;
+    pAhorro.value      = 20;
     calcular();
-  </script>
+  });
+
+  calcular(); // cálculo inicial
+</script>
+
 </body>
+<footer class="bg-dark text-white py-3" style="background-color: #2E4053;">
+        <div class=" text-center">
+            <h5 class="mb-3">Nos pueden contactar:</h5>
+            <div class="d-flex justify-content-center flex-wrap gap-4">
+                <span>andrea.higuita119@gmail.com</span>
+                <span>juloperaca@unal.edu.co</span>
+                <span>mcoloradom@unal.edu.co</span>
+                <span>ruiz.migue0120@gmail.com</span>
+                <span>juribebl@unal.edu.co</span>
+            </div>
+        </div>
+    </footer>  
 </html>

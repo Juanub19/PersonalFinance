@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal Finance</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js" integrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK" crossorigin="anonymous"></script>
+</head>
     <link rel="stylesheet" href="css/index.css">
     <style>
   .carousel-container {
@@ -64,8 +68,50 @@
   }
 </style>
 </head>
+
 <body>
-    <header>
+
+    <header >
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+    
+    <!-- Logo + nombre -->
+    <a class="navbar-brand d-flex align-items-center fs-3" href="#">
+      <img src="imagenesmenu/Logo personal finance.jpg" alt="Logo" 
+           class="d-inline-block align-text-top me-2" 
+           width="80" height="80">
+      Personal Finance
+    </a>
+
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+ <span class="navbar-toggler-icon"></span>
+</button>
+
+
+    <!-- Links del menú -->
+<div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+        <a class="nav-link" href="index.html">Menu principal</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="TT2PF.html">Control de gastos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="reduccionDeGastos.html">Reducción de gastos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="Ahorro e inversion.html">Ahorros e inversión</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="Ordenfinanciero.html">Orden financiero</a>
+      </li>
+    </ul>
+
+  </div>
+</nav>
+
+  </div>
         <nav>
             <ul class="menu">
                 <li><a href="#clasificacion">Clasificación</a></li>
@@ -81,6 +127,7 @@
             </ul>
             
         </nav>
+
 
         <h1>¿Qué son los gastos?</h1>
         <h2>Un análisis profundo de tus finanzas</h2>
@@ -279,65 +326,7 @@
     >
 </div>
 
-        </section>
-
-        <section id="practica">
-            <h2>Cómo poner en práctica lo aprendido: Una guía sencilla para tu dinero</h2>
-            <p>
-                Visualiza que tu dinero es un equipo deportivo. Cada jugador (cada euro o dólar) necesita saber su rol y dirección. Mejorar tus gastos es como ser el director técnico: garantizas que cada jugador esté en la posición adecuada para que tu conjunto (tus finanzas) triunfe en el encuentro.
-            </p>
-            <p>
-                A continuación, te proponemos un plan de dos etapas, fácil de implementar, para que tu dinero sea más efectivo.
-            </p>
-            <h3>Paso 1: Implementa Estrategias Inteligentes</h3>
-            <p>Estas son las maniobras esenciales para que tu dinero te beneficie.</p>
-            <h4>⚽ Para tus Gastos Personales</h4>
-            <ul>
-                <li>
-                    <strong>Prioriza tu ahorro:</strong> Esta es la máxima fundamental. En lugar de acumular lo que te queda al finalizar el mes, invierte esta regla al revés. Establece una transferencia automática para que una parte de tu salario se destine directamente a tus ahorros tan pronto como los recibas. Es dinero que no “verás” y te adaptarás a vivir con el resto.
-                </li>
-                <li>
-                    <strong>Identifica los “Gastos Hormiga”:</strong> Esos pequeños gastos diarios (el café, el bocadillo de media tarde) pueden parecer triviales, pero sumados se convierten en un gran problema. Lanza un pequeño desafío: anota esos gastos durante una semana. Te asombrarás de la cantidad total. La solución es sencilla: prepara tu café en casa o lleva una botella de agua reutilizable.
-                </li>
-                <li>
-                    <strong>Evalúa tus “zombies financieros”:</strong> Reflexiona sobre todas las suscripciones que posees (servicios de streaming, aplicaciones, gimnasio). ¿Realmente las utilizas todas? Es habitual pagar por servicios que han quedado en el olvido. Dedica 15 minutos a revisar tus extractos y elimina cualquier suscripción que ya no necesites.
-                </li>
-                <li>
-                    <strong>Negocia sin temor:</strong> Muchas empresas están dispuestas a ofrecer descuentos para mantenerte como cliente. Comunícate con tu proveedor de internet, telefonía o seguros y pregunta: “¿Hay alguna promoción para clientes fieles como yo?” O simplemente consulta: “¿Qué otras alternativas más económicas tienen?” Generalmente, esta estrategia funciona.
-                </li>
-            </ul>
-            <h4>📈 Para tu Negocio</h4>
-            <ul>
-                <li>
-                    <strong>Negocia con tus proveedores:</strong> No tomes el primer precio que te ofrecen. Solicita presupuestos a diferentes empresas y negocia. Habla con tus proveedores actuales y pregúntales si pueden mejorarte las condiciones.
-                </li>
-                <li>
-                    <strong>Automatiza las tareas tediosas:</strong> Utilizar un software que realice la contabilidad y gestione los informes de gastos por ti no es un lujo, es una inversión. Te ahorra tiempo, minimiza errores y permite que tus empleados se concentren en tareas más relevantes.
-                </li>
-                <li>
-                    <strong>Define reglas claras:</strong> Establece una política de gastos para la empresa. Informa a tu equipo acerca de los límites de gasto en viajes, comidas y otros recursos. Esto previene sorpresas y ayuda a mantener el control.
-                </li>
-            </ul>
-            <h3>Paso 2: Emplea las Herramientas Adecuadas</h3>
-            <p>No es necesario ser un experto en finanzas para administrar tus gastos. Las herramientas están disponibles para asistirte en esta tarea.</p>
-            <h4>📱 Para la gestión personal</h4>
-            <ul>
-                <li>
-                    <strong>Para quienes disfrutan de las aplicaciones:</strong> Hay programas como Fintonic que se enlazan con tu banco y te permiten ver con precisión en qué utilizas tu dinero, organizándolo por categorías. Otra alternativa es Wallet, que presenta gráficos sencillos de entender.
-                </li>
-                <li>
-                    <strong>Para aquellos que prefieren el control manual:</strong> Utilizar una hoja de cálculo (ya sea Excel o Hojas de Google) es una herramienta muy efectiva. Puedes diseñar tu propio presupuesto y analizar tus cifras como un profesional. Además, hay numerosas plantillas gratuitas disponibles en la web.
-                </li>
-            </ul>
-            <h4>Para la administración de negocios</h4>
-            <ul>
-                <li>
-                    <strong>Software para gestión de gastos:</strong> Herramientas como Expensify o Pleo están creadas para que tus empleados tomen una fotografía de un recibo y el gasto se registre de manera automática. Esto facilita considerablemente la contabilidad.
-                </li>
-                <li>
-                    <strong>Software de contabilidad:</strong> Aplicaciones como QuickBooks o Holded te brindan la posibilidad de administrar todas las finanzas de tu empresa desde un solo sitio: abarcando facturas, gastos e impuestos.
-                </li>
-            </ul>
+      
             <h3>Conclusión</h3>
             <p>
                 La gestión de gastos es una habilidad esencial para cualquier persona que desee tener éxito financiero. 
@@ -432,5 +421,17 @@
     showSlideCustom('carousel2', 0);
   });
     </script>
+    <footer class="bg-dark text-white py-3" style="background-color: #2E4053;">
+        <div class="container text-center">
+            <h5 class="mb-3">Nos pueden contactar:</h5>
+            <div class="d-flex justify-content-center flex-wrap gap-4">
+                <span>andrea.higuita119@gmail.com</span>
+                <span>juloperaca@unal.edu.co</span>
+                <span>mcoloradom@unal.edu.co</span>
+                <span>ruiz.migue0120@gmail.com</span>
+                <span>juribebl@unal.edu.co</span>
+            </div>
+        </div>
+    </footer>    
 </body>
 </html>
