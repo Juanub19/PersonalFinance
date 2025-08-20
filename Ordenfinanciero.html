@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Proyecto: Finanzas Personales</title>
+
+  <!-- =========================
+       Estilos básicos (CSS)
+       Paleta: #2E4053 (azul oscuro), #8BC34A (verde), #FFFFFF (blanco), #F7F7F7 (fondo), #87CEEB (celeste)
+       ========================= -->
+  <style>
+    :root{
+      --azul:#2E4053;
+      --verde:#8BC34A;
+      --blanco:#FFFFFF;
+      --fondo:#F7F7F7;
+      --celeste:#87CEEB;
+    }
+
+    *{ box-sizing: border-box; }
+
+    body{
+      font-family: Arial, Helvetica, sans-serif;    /* Tipografia */
+      font-size:16px;
+      background: var(--fondo);
+      margin:0;
+      color:#333;
+    }
+
+    header{
+      background: var(--azul);
+      color: var(--blanco);
+      text-align:center;
+      padding:24px 16px;
+    }
+
+    header p{ margin:6px 0 0; opacity:.9; }
+
+    /* Barra de navegación simple (pequeño menu interno (no confundir con el menu general que hace juanpa))*/
+    nav{
+      background: var(--verde);
+      text-align:center;
+      padding:10px;
+    }
+    nav a{
+      color:var(--blanco);
+      text-decoration:none;
+      font-weight:bold;
+      margin:0 10px;
+    }
+    nav a:hover{ text-decoration:underline; }
+
+    /* Contenedor (no olvidar como se hace, te lo explico Jose*/
+    section{
+      max-width: 960px;
+      margin: 18px auto;
+      background: var(--blanco);
+      border-radius: 12px;
+      padding: 22px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+
+    /* Títulos */
+    h2{
+      margin-top:0;
+      color: var(--azul);
+      border-left: 8px solid var(--celeste);
+      padding-left:10px;
+    }
+
+    /* Contenedor del "icono" ilustrativo (SVG) */
+    .icono{
+      width:84px;
+      height:84px;
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: linear-gradient(135deg, var(--celeste), var(--verde));
+      box-shadow: 0 2px 6px rgba(0,0,0,.15);
+      margin: 10px 0 16px;
+    }
+    .fila{
+      display:grid;
+      grid-template-columns: 100px 1fr;
+      gap:18px;
+      align-items:flex-start;
+    }
+
+    ul{ line-height:1.6; }
+
+    /* Links de contenido */
+    a.enlace{
+      color: var(--azul);
+      font-weight:bold;
+    }
+    a.enlace:hover{ color: var(--verde); }
+
+    /* Estilo de la calculadora de presupuesto  */
+    .calculadora{
+      border:2px solid var(--celeste);
+      border-radius:12px;
+      padding:16px;
+      background:#FAFDFF;
+    }
+    .grid-3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+    label{ font-size:.95rem; color:#333; }
+    input[type="number"]{
+      width:100%;
+      padding:10px;
+      border:1px solid #DDD;
+      border-radius:8px;
+    }
+    .tabla{
+      width:100%;
+      border-collapse: collapse;
+      margin-top:12px;
+      background: var(--blanco);
+    }
+    .tabla th, .tabla td{
+      border:1px solid #EEE;
+      padding:10px;
+      text-align:center;
+    }
+    .tabla th{
+      background:#F3F9FF;
+      color:#333;
+    }
+    .btn{
+      background: var(--verde);
+      color: var(--blanco);
+      border:none;
+      padding:10px 14px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+    .btn.secundario{
+      background: var(--azul);
+    }
+    .alerta{
+      margin-top:8px;
+      font-size:.9rem;
+      color:#B00020;
+      display:none; /* se muestra solo si hay error, no olvidar la clase de .alerta*/
+    }
+
+    footer{
+      margin-top:18px;
+      background: var(--azul);
+      color: var(--blanco);
+      text-align:center;
+      padding:14px;
+    }
+
+    @media (max-width:720px){
+      .fila{ grid-template-columns: 1fr; }
+      .grid-3{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Encabezado principal de la página: Contiene el título del proyecto y un subtítulo.-->
+  <header>
+    <h1>Proyecto: Finanzas Personales</h1>
+    <p>Enfoque: Orden Financiero</p>
+  </header>
+
+  <!-- Menú para moverse por secciones (Navegacion) -->
+  <nav>
+    <a href="#definicion">Definición</a>
+    <a href="#presupuesto">Presupuesto (con calculadora)</a>
+    <a href="#objetivos">Metas</a>
+    <a href="#fondo">Fondo de emergencia</a>
+    <a href="#deudas">Deudas</a>
+    <a href="#automatiza">Automatiza</a>
+    <a href="#monitorea">Monitorea</a>
+    <a href="#cursos">Cursos</a>
+  </nav>
+
+  <!-- 1. Definición  -->
+  <section id="definicion">
+    <div class="fila">
+      <!-- Icono/imagen: billetera (ya se cambio) -->
+      <div class="icono" aria-hidden="true">
+        <svg width="54" height="54" viewBox="0 0 64 64">
+          <!-- cuerpo de la billetera -->
+          <rect x="8" y="18" width="48" height="28" rx="6" fill="#2E4053"></rect>
+          <!-- tapa -->
+          <rect x="6" y="14" width="40" height="14" rx="6" fill="#8BC34A"></rect>
+          <!-- broche -->
+          <circle cx="46" cy="32" r="5" fill="#87CEEB"></circle>
+        </svg>
+      </div>
+      <div>
+        <h2>1. Definición de finanzas personales</h2>
+        <p>
+          Las finanzas personales son el manejo del dinero propio, que incluye
+          <b>ingresos</b>, <b>gastos</b>, <b>activos</b>, <b>pasivos</b>,
+          <b>ahorros</b>, <b>inversiones</b>, <b>seguros</b> y <b>créditos</b>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!--  2. Presupuesto + Calculadora -->
+  <section id="presupuesto">
+    <div class="fila">
+      <!-- Icono/imagen: gráfico circular 50/30/20 -->
+      <div class="icono" aria-hidden="true">
+        <svg width="54" height="54" viewBox="0 0 64 64">
+          <!-- fondo círculo -->
+          <circle cx="32" cy="32" r="22" fill="#E8F4FF"></circle>
+          <!-- 50% (verde) -->
+          <path d="M32 10 A22 22 0 0 1 54 32 L32 32 Z" fill="#8BC34A"></path>
+          <!-- 30% (celeste) -->
+          <path d="M54 32 A22 22 0 0 1 22 50 L32 32 Z" fill="#87CEEB"></path>
+          <!-- 20% (azul oscuro) -->
+          <path d="M22 50 A22 22 0 0 1 32 10 L32 32 Z" fill="#2E4053"></path>
+        </svg>
+      </div>
+
+      <div>
+        <h2>2. Elabora un presupuesto</h2>
+        <p>
+          Regla sugerida <b>50/30/20</b>:
+          50&nbsp;% necesidades, 30&nbsp;% deseos, 20&nbsp;% ahorro o deudas.
+          Más detalles en
+          <!-- Se puede abrir en nueva pestaña -->
+          <a class="enlace" href="https://www.123dinero.com/como-organizar-finanzas-personales/?utm_source=chatgpt.com"
+             target="_blank" rel="noopener noreferrer">
+             123dinero: Cómo organizar finanzas personales
+          </a>.
+        </p>
+
+        <!--  Calculadora interactiva  -->
+        <div class="calculadora" id="calc">
+          <h3 style="margin:0 0 8px;color:#1f3a4a;">Calculadora 50/30/20</h3>
+
+          <!-- Campo de ingreso mensual -->
+          <label for="ingresos"><b>Ingreso mensual (COP)</b></label>
+          <input type="number" id="ingresos" placeholder="Ej: 2000000" min="0" step="1000" />
+
+          <!-- Porcentajes editables -->
+          <div class="grid-3" style="margin-top:10px;">
+            <div>
+              <label for="pNecesidades">Necesidades (%)</label>
+              <input type="number" id="pNecesidades" value="50" min="0" max="100" />
+            </div>
+            <div>
+              <label for="pDeseos">Deseos (%)</label>
+              <input type="number" id="pDeseos" value="30" min="0" max="100" />
+            </div>
+            <div>
+              <label for="pAhorro">Ahorro / Deudas (%)</label>
+              <input type="number" id="pAhorro" value="20" min="0" max="100" />
+            </div>
+          </div>
+
+          <!-- Botones útiles -->
+          <div style="display:flex; gap:10px; margin-top:10px;">
+            <button class="btn" id="btnCalcular">Calcular</button>
+            <button class="btn secundario" id="btnReset">Restablecer 50/30/20</button>
+          </div>
+
+          <!-- Mensaje si los porcentajes no suman 100 (de la clase de alerta)-->
+          <div class="alerta" id="msgError">Los porcentajes deben sumar 100&nbsp;%.</div>
+
+          <!-- Tabla de resultados -->
+          <table class="tabla" aria-live="polite">
+            <thead>
+              <tr>
+                <th>Categoría</th>
+                <th>Porcentaje</th>
+                <th>Monto asignado (COP)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>NECESIDADES</td>
+                <td id="sNecesidades">50 %</td>
+                <td id="sNecesidades">$ 0</td>
+              </tr>
+              <tr>
+                <td>DESEOS</td>
+                <td id="sDeseos">30 %</td>
+                <td id="sDeseos">$ 0</td>
+              </tr>
+              <tr>
+                <td>AHORRO / DEUDAS</td>
+                <td id="sAhorro">20 %</td>
+                <td id="sAhorro">$ 0</td>
+              </tr>
+              <tr>
+                <th style="text-align:right;">TOTAL</th>
+                <th id="sTotal">100 %</th>
+                <th id="sTotal">$ 0</th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Fin calculadora-->
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Metas (objetivos) -->
+  <section id="objetivos">
+    <div class="fila">
+      <!-- Icono/imagen: diana/objetivo -->
+      <div class="icono" aria-hidden="true">
+        <svg width="54" height="54" viewBox="0 0 64 64">
+          <circle cx="32" cy="32" r="22" fill="#FFFFFF" stroke="#2E4053" stroke-width="4"></circle>
+          <circle cx="32" cy="32" r="14" fill="#87CEEB"></circle>
+          <circle cx="32" cy="32" r="6" fill="#2E4053"></circle>
+          <!-- flecha -->
+          <path d="M44 20 L54 10 M50 10 L54 10 L54 14" stroke="#8BC34A" stroke-width="4" fill="none"></path>
+        </svg>
+      </div>
+      <div>
+        <h2>3. Establece objetivos financieros</h2>
+        <ul>
+          <li>Corto plazo (&lt; 3 años)</li>
+          <li>Mediano plazo (3–5 años)</li>
+          <li>Largo plazo (&gt; 5 años)</li>
+        </ul>
+        <p>Usa la metodología <b>SMART</b> para que tus metas sean específicas, medibles, alcanzables, relevantes y con plazo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Fondo de emergencia -->
+  <section id="fondo">
+    <div class="fila">
+      <!-- Icono/imagen: salvavidas -->
+      <div class="icono" aria-hidden="true">
+        <svg width="54" height="54" viewBox="0 0 64 64">
+          <circle cx="32" cy="32" r="22" fill="#FFFFFF" stroke="#87CEEB" stroke-width="8"></circle>
+          <circle cx="32" cy="32" r="12" fill="#FFFFFF"></circle>
+          <path d="M32 10 v12 M32 42 v12 M10 32 h12 M42 32 h12" stroke="#2E4053" stroke-width="4"></path>
+        </svg>
+      </div>
+      <div>
+        <h2>4. Construye un fondo de emergencia</h2>
+        <p>Objetivo: entre <b>3 y 6 meses</b> de gastos fijos disponibles en un lugar seguro y de fácil acceso.</p>
+      </div>
+    </div>
+  </section>
+
+  <!--  5. Deudas -->
+  <section id="deudas">
+    <div class="fila">
+      <!-- Icono/imagen: cadena rota -->
+      <div class="icono" aria-hidden="true">
+        <svg width="54" height="54" viewBox="0 0 64 64">
+          <path d="M18 24 a10 10 0 0 1 14 14" stroke="#2E4053" stroke-width="6" fill="none"></path>
+          <path d="M46 40 a10 10 0 0 1 -14 -14" stroke="#8BC34A" stroke-width="6" fill="none"></path>
+          <line x1="28" y1="28" x2="36" y2="36" stroke="#FF6666" stroke-width="4"></line>
+        </svg>
+      </div>
+      <div>
+        <h2>5. Prioriza el pago de deudas</h2>
+        <ul>
+          <li><b>Avalancha:</b> paga primero la deuda con mayor interés.</li>
+          <li><b>Bola de nieve:</b> empieza por la más pequeña para ganar impulso.</li>
+          <li>Negocia mejores tasas o plazos cuando sea posible.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!--  6. Automatiza -->
+  <section id="automatiza">
+    <div class="fila">
+      <!-- Icono/imagen: engranaje -->
+      <div class="icono" aria-hidden="true">
+        <svg width="54" height="54" viewBox="0 0 64 64">
+          <circle cx="32" cy="32" r="10" fill="#8BC34A"></circle>
+          <g stroke="#2E4053" stroke-width="6">
+            <line x1="32" y1="8" x2="32" y2="16"></line>
+            <line x1="32" y1="48" x2="32" y2="56"></line>
+            <line x1="8" y1="32" x2="16" y2="32"></line>
+            <line x1="48" y1="32" x2="56" y2="32"></line>
+            <line x1="14" y1="14" x2="20" y2="20"></line>
+            <line x1="44" y1="44" x2="50" y2="50"></line>
+            <line x1="14" y1="50" x2="20" y2="44"></line>
+            <line x1="44" y1="20" x2="50" y2="14"></line>
+          </g>
+        </svg>
+      </div>
+      <div>
+        <h2>6. Automatiza tus finanzas</h2>
+        <p>Programa pagos automáticos de servicios, ahorro e inversiones. Usa recordatorios o apps para no olvidar fechas.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Monitorea -->
+  <section id="monitorea">
+    <div class="fila">
+      <!-- Icono/imagen: tablero/chequeo -->
+      <div class="icono" aria-hidden="true">
+        <svg width="54" height="54" viewBox="0 0 64 64">
+          <rect x="10" y="14" width="44" height="36" rx="6" fill="#FFFFFF" stroke="#2E4053" stroke-width="4"></rect>
+          <polyline points="16,40 26,30 32,35 44,24" fill="none" stroke="#8BC34A" stroke-width="4"></polyline>
+        </svg>
+      </div>
+      <div>
+        <h2>7. Monitorea y ajusta regularmente</h2>
+        <p>Revisa tu presupuesto y tu progreso al menos una vez al mes. Ajusta según cambios en ingresos, gastos o prioridades.</p>
+      </div>
+    </div>
+  </section>
+
+  <!--  8. Educación financiera (links útiles)-->
+  <section id="cursos">
+    <div class="fila">
+      <!-- Icono/imagen: birrete -->
+      <div class="icono" aria-hidden="true">
+        <svg width="54" height="54" viewBox="0 0 64 64">
+          <polygon points="12,24 32,14 52,24 32,34" fill="#2E4053"></polygon>
+          <rect x="22" y="34" width="20" height="10" fill="#8BC34A"></rect>
+          <line x1="52" y1="24" x2="52" y2="40" stroke="#87CEEB" stroke-width="4"></line>
+          <circle cx="52" cy="40" r="3" fill="#87CEEB"></circle>
+        </svg>
+      </div>
+      <div>
+        <h2>8. Cursos gratuitos de educación financiera</h2>
+        <ul>
+          <li>
+            <a class="enlace" href="https://aulavirtual.superfinanciera.gov.co"
+               target="_blank" rel="noopener noreferrer">
+              Superintendencia Financiera de Colombia – Aula Virtual
+            </a>
+          </li>
+          <li>
+            <a class="enlace" href="https://www.minhacienda.gov.co"
+               target="_blank" rel="noopener noreferrer">
+              Ministerio de Hacienda y Crédito Público – Educación Financiera
+            </a>
+          </li>
+          <li>
+            Plataformas internacionales:
+            <a class="enlace" href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer">Coursera</a>
+            y
+            <a class="enlace" href="https://www.edx.org/" target="_blank" rel="noopener noreferrer">edX</a>.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lógica de la CALCULADORA -->
+  <script>
+    // Referencias a los elementos  inputs
+    const ingresos      = document.getElementById('ingresos');
+    const pNecesidades  = document.getElementById('pNecesidades');
+    const pDeseos       = document.getElementById('pDeseos');
+    const pAhorro       = document.getElementById('pAhorro');
+
+    const sNecesidades  = document.getElementById('sNecesidades');
+    const sDeseos       = document.getElementById('sDeseos');
+    const sAhorro       = document.getElementById('sAhorro');
+    const sTotal        = document.getElementById('sTotal');
+
+    // Referencias a las celdas donde se mostrarán los valores que obtiene la calculadora
+    const mNecesidades  = document.getElementById('mNecesidades');
+    const mDeseos       = document.getElementById('mDeseos');
+    const mAhorro       = document.getElementById('mAhorro');
+    const mTotal        = document.getElementById('mTotal');
+
+    const btnCalcular   = document.getElementById('btnCalcular');
+    const btnReset      = document.getElementById('btnReset');
+    const msgError      = document.getElementById('msgError');
+
+
+    function formatoCOP(valor){
+      return valor.toLocaleString('es-CO');
+    }
+
+    // Función que realiza el cálculo principal de la regla con la que se hace el calculo
+    function calcular(){
+      // 1) Convertimos los campos de entrada a números. Si están vacíos, se toma 0.
+      const ingreso  = Number(ingresos.value || 0);
+      const n        = Number(pNecesidades.value || 0);
+      const d        = Number(pDeseos.value || 0);
+      const a        = Number(pAhorro.value || 0);
+
+      // Validar que la suma de los porcentajes sea exactamente 100.
+      const suma = n + d + a;
+      sTotal.textContent = suma + ' %'; // Muestra la suma actual de porcentajes
+      const sumaValida = (suma === 100);
+
+      // Mostrar/ocultar mensaje de error si la suma no es 100
+      msgError.style.display = sumaValida ? 'none' : 'block';
+      if(ingreso <= 0 || !sumaValida){
+        mNecesidades.textContent = '$ 0';
+        mDeseos.textContent      = '$ 0';
+        mAhorro.textContent      = '$ 0';
+        mTotal.textContent       = '$ 0';
+        sNecesidades.textContent = n + ' %';
+        sDeseos.textContent      = d + ' %';
+        sAhorro.textContent      = a + ' %';
+        return;
+      }
+
+      // Calcula los montos asignados para cada categoría según los porcentajes en numeros enteros.
+      const mN = Math.round(ingreso * (n/100));
+      const mD = Math.round(ingreso * (d/100));
+      const mA = Math.round(ingreso * (a/100));
+      const mT = mN + mD + mA; // El total calculado
+
+      // Imprimir los resultados
+      sNecesidades.textContent = n + ' %';
+      sDeseos.textContent      = d + ' %';
+      sAhorro.textContent      = a + ' %';
+
+      mNecesidades.textContent = '$ ' + formatoCOP(mN);
+      mDeseos.textContent      = '$ ' + formatoCOP(mD);
+      mAhorro.textContent      = '$ ' + formatoCOP(mA);
+      mTotal.textContent       = '$ ' + formatoCOP(mT);
+    }
+
+    // Botón para ejecutar el cálculo al hacer clic
+    btnCalcular.addEventListener('click', calcular);
+
+    [ingresos, pNecesidades, pDeseos, pAhorro].forEach(el=>{
+      el.addEventListener('input', calcular);
+    });
+
+    btnReset.addEventListener('click', ()=>{
+      pNecesidades.value = 50;
+      pDeseos.value      = 30;
+      pAhorro.value      = 20;
+      calcular();
+    });
+
+    // Ejecuta el cálculo inicial cuando la página carga, usando los valores por defecto.
+    calcular();
+  </script>
+</body>
+</html>
