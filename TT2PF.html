@@ -28,12 +28,13 @@
         }
        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /*font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--light-color);
             color: var(--text-color);
             line-height: 1.6;
             padding: 20px;
-            background: linear-gradient(135deg, #f5f9e9 0%, #f1f8e9 100%);
+            background: linear-gradient(135deg, #f5f9e9 0%, #f1f8e9 100%);*/
+            padding: 0;
         }
        
         .header {
@@ -220,7 +221,7 @@
             position: relative;
         }
         
-        li::before {
+        ul:not(.navbar-nav) li::before {
             content: "•";
             color: var(--header-green);
             font-weight: bold;
@@ -248,7 +249,10 @@
             text-decoration: none;
             border-bottom: 1px solid var(--header-green);
         }
-       
+       .navbar-brand {
+    text-decoration: none; /* Elimina subrayado */
+    border-bottom: none;   /* Elimina cualquier borde inferior */
+}
         /* Estilos para la calculadora */
         .calculator-form {
             margin-top: 20px;
@@ -450,7 +454,7 @@
   </div>
 </nav>
 
-
+<div class="container mt-4">
     <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav ms-auto">
       <li class="nav-item">
@@ -670,10 +674,11 @@
             });
         });
     });
+
 </script>
-   
+ </div>  
     <footer class="bg-dark text-white py-3" style="background-color: #2E4053;">
-        <div class="container text-center">
+        <div class="container-fluid text-center">
             <h5 class="mb-3">Nos pueden contactar:</h5>
             <div class="d-flex justify-content-center flex-wrap gap-4">
                 <span>andrea.higuita119@gmail.com</span>
@@ -685,5 +690,6 @@
         </div>
     </footer>  
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
+
 </body>
 </html>
